@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class MaitriserSonSommeil extends Component {
   render() {
     return (
-      <section>
+      <section className="videos">
         <h1> Maîtriser son sommeil </h1>
         <div>
           <h2>Native American Flute Music and Rain LIVE - Relaxation, Sommeil, Méditation, Guérison, Études</h2>

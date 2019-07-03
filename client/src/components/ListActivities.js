@@ -75,7 +75,7 @@ class ListActivities extends Component {
         >
         {this.state.categories.map(c => <Option key={c}>{c}</Option>)}
         </Select>
-        <Button type="primary" onClick={this.handleFormSubmit}>Primary</Button>
+        <Button type="primary" onClick={this.handleFormSubmit}>Valider</Button>
       </div>
     )
   }

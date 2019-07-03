@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class RoutineMatinale extends Component {
   render() {
     return (
-      <section>
+      <section className="videos">
         <h1> Routine Matinale </h1>
         <div>
           <h2>Méditation Matinale pour bien démarrer la journée | Force intérieure et Sérénité</h2>

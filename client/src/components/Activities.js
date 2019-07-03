@@ -65,7 +65,7 @@ class Activities extends Component {
                 <DatePicker name="date" onChange={this.handleChangeDate} />
                 <Input name="photo" placeholder="Photo" onChange={this.handleChange} />
                 <Input name="description" placeholder="Description" onChange={this.handleChange} />
-                <Button type="primary" onClick={this.handleFormSubmit}>Primary</Button>
+                <Button type="primary" onClick={this.handleFormSubmit}>Ajouter</Button>
             </div>
         );
     }

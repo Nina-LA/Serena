@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class RetrouverSaConfianceEnSoi extends Component {
   render() {
     return (
-      <section>
+      <section className="videos">
         <h1> Retrouver Sa Confiance En Soi </h1>
         <div>
           <h2>Pleine conscience de la douceur et du bonheur - Christophe André</h2>

@@ -34,6 +34,7 @@ class App extends Component {
         // console.log("Check User in APP.JS: ",responseFromBackend.data)
         const { userDoc } = responseFromBackend.data;
         this.syncCurrentUser(userDoc);
+        console.log(userDoc);
       });
   }
 
