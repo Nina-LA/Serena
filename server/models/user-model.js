@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     // document structure & rules defined here
     username: {
       type: String,
@@ -16,33 +16,39 @@ const userSchema = new Schema({
       unique: true,
       match: /^.+@.+\..+$/
     },
-    encryptedPassword: { 
-      type: String, 
-      required: true 
+    encryptedPassword: {
+      type: String,
+      required: true
     },
     Categories: [
-      { 
+      {
         type: String
+      }
+    ],
+    ActivityChoosen: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Activites"
       }
     ],
     ActivitiesDone: [
       {
-        Categorie: { 
-          type: String, 
-          required: true 
+        Categorie: {
+          type: String,
+          required: true
         },
-        Activity: { 
-          type: String, 
-          required: true 
+        Activity: {
+          type: String,
+          required: true
         },
-        HumeurDebut: { 
-          type: Number, 
-          required: true 
+        HumeurDebut: {
+          type: Number,
+          required: true
         },
-        HumeurFin: { 
-          type: Number, 
-          required: true 
-        }            
+        HumeurFin: {
+          type: Number,
+          required: true
+        }
       }
     ]
   },

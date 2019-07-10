@@ -1,8 +1,5 @@
 .App {
-  
 }
-
-
 
 /* .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -29,13 +26,14 @@
 }
 
 /* Style the header links */
-.header img, a {
+.header img,
+a {
   float: left;
   color: black;
   text-align: center;
   padding: 12px;
   text-decoration: none;
-  font-size: 18px; 
+  font-size: 18px;
   line-height: 25px;
   border-radius: 4px;
 }
@@ -70,15 +68,17 @@
   height: 200px;
   position: relative;
   top: -50px;
-  left: -30px
+  left: -30px;
 }
 
-.home{
-  height: 500px;
-  width: 1039px;
+.home {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
 }
 
-.Activités{
+.Activités {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -94,6 +94,13 @@
   color: white;
 }
 
+.categories {
+  margin: 165px 30px;
+}
+.plan {
+  margin: 30px 40px;
+}
+
 .account {
   display: flex;
   flex-direction: row;
@@ -101,7 +108,15 @@
   align-items: center;
 }
 
-/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */ 
+.chooseActivity {
+  display: flex;
+}
+
+.buttonActivity {
+  margin-left: 30px;
+}
+
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
   .header a {
     float: none;
@@ -113,7 +128,7 @@
   }
 }
 
-.depression{
+.depression {
   margin: 20px 30px;
 }
 
@@ -129,7 +144,7 @@
     transform: rotate(360deg);
   }
 }
-.giphy-embed{
+.giphy-embed {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -137,13 +152,35 @@
   width: 50%;
 }
 
-.videos{
+.videos {
   text-align: center;
 }
 
-footer{
+footer {
   background-color: #f1f1f1;
   padding: 20px 10px;
   height: 100px;
   text-align: center;
 }
+
+/* Antdesgin calendar style */
+.events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.events .ant-badge-status {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+.notes-month {
+  text-align: center;
+  font-size: 28px;
+}
+.notes-month section {
+  font-size: 28px;
+}
+/* End Antdesgin calendar style */

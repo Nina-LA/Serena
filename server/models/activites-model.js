@@ -24,6 +24,10 @@ const activitesSchema = new Schema({
     description: {
       type: String,
       required: true,
+    },
+    user_id: {
+      type: Number,
+      required: true,
     }
   },
   {

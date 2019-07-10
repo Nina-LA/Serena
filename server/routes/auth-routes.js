@@ -1,60 +1,72 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const User = require('../models/user-model');
+const User = require("../models/user-model");
 
-const passport = require('passport');
+const passport = require("passport");
 
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const bcryptSalt = 10;
-
 
 router.post("/signup", (req, res, next) => {
   const { username, email, encryptedPassword } = req.body;
 
-  if(username == '' || email == '' || encryptedPassword.match(/[0-9]/) === null){
+  if (
+    username == "" ||
+    email == "" ||
+    encryptedPassword.match(/[0-9]/) === null
+  ) {
     // send error JSON if any of the fields is empty or password doesn't contain a number
-    res.status(401).json({ message: "All fields need to be filled and password must contain a number." })
+    res
+      .status(401)
+      .json({
+        message:
+          "All fields need to be filled and password must contain a number."
+      });
     return;
   }
 
-//   if(password.length < 7){
-//     res.status(400).json({ message: 'Please make your password at least 8 characters long for security purposes.' });
-//     return;
-// }
+  //   if(password.length < 7){
+  //     res.status(400).json({ message: 'Please make your password at least 8 characters long for security purposes.' });
+  //     return;
+  // }
 
   User.findOne({ email })
-  .then(foundUser => {
-    if(foundUser !==null){
-      res.status(401).json({ message: "A user with the same email is already registered!" })
-      return;
-    }
+    .then(foundUser => {
+      if (foundUser !== null) {
+        res
+          .status(401)
+          .json({
+            message: "A user with the same email is already registered!"
+          });
+        return;
+      }
 
-      console.log("33 line")
+      console.log("33 line");
       // encrypt the submitted password before saving
       const salt = bcrypt.genSaltSync(bcryptSalt);
       const hashpass = bcrypt.hashSync(encryptedPassword, salt);
-      
+
       User.create({ username, email, encryptedPassword: hashpass })
-      .then(userDoc => {
-          console.log("40 line")
+        .then(userDoc => {
+          console.log("40 line");
           // if all good, log in the user automatically
           // "req.logIn()" is a Passport method that calls "serializeUser()"
           // (that saves the USER ID in the session)
           req.login(userDoc, () => {
-            console.log("45 line")
+            console.log("45 line");
             // hide "encryptedPassword" before sending the JSON (it's a security risk)
             userDoc.encryptedPassword = undefined;
             res.json({ userDoc });
           });
         })
-        .catch( err => {
-          console.log("52 line")
-          next(err)
-      }); //closing User.create()
-  })
-  .catch( err => next(err)); // closing User.findOne();
-})
+        .catch(err => {
+          console.log("52 line");
+          next(err);
+        }); //closing User.create()
+    })
+    .catch(err => next(err)); // closing User.findOne();
+});
 
 //////////////// LOGIN /////////////////////
 router.post("/login", (req, res, next) => {
@@ -88,11 +100,11 @@ router.post("/login", (req, res, next) => {
   // })
   // .catch(err => next(err));
   // LOGIN WITH PASSPORT-LOCAL-STRATEGY:
-  passport.authenticate('local', (err, userDoc, failureDetails) => {
-    console.log('ok', err, userDoc)
+  passport.authenticate("local", (err, userDoc, failureDetails) => {
+    console.log("ok", err, userDoc);
 
     if (err) {
-      res.status(500).json({ message: 'Something went wrong' })
+      res.status(500).json({ message: "Something went wrong" });
       return;
     }
 
@@ -101,9 +113,9 @@ router.post("/login", (req, res, next) => {
       return;
     }
 
-    req.login(userDoc, (err) => {
+    req.login(userDoc, err => {
       if (err) {
-        res.status(500).json({ message: 'Something went wrong while login!' });
+        res.status(500).json({ message: "Something went wrong while login!" });
         return;
       }
 
@@ -113,7 +125,7 @@ router.post("/login", (req, res, next) => {
       res.json({ userDoc });
     });
   })(req, res, next);
-})
+});
 
 //////////////// LOGOUT /////////////////////
 
@@ -130,22 +142,21 @@ router.delete("/logout", (req, res, next) => {
 // (b) what are the details of the logged-in user
 router.get("/checkuser", (req, res, next) => {
   if (req.user) {
-  // hide "encryptedPassword" before sending the JSON (it's a security risk)
+    // hide "encryptedPassword" before sending the JSON (it's a security risk)
     req.user.encryptedPassword = undefined;
     res.json({ userDoc: req.user });
-  }
-  else {
+  } else {
     res.json({ userDoc: null });
   }
 });
 
-router.get('/loggedin', (req, res, next) => {
+router.get("/loggedin", (req, res, next) => {
   // req.isAuthenticated() is defined by passport
   if (req.isAuthenticated()) {
-      res.status(200).json(req.user);
-      return;
+    res.status(200).json(req.user);
+    return;
   }
-  res.status(403).json({ message: 'Unauthorized' });
+  res.status(403).json({ message: "Unauthorized" });
 });
 
 module.exports = router;

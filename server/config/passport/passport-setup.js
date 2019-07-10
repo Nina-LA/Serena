@@ -2,8 +2,7 @@ const passport = require("passport");
 
 const User = require("../../models/user-model.js");
 
-require('./local-strategy');
-
+require("./local-strategy");
 
 // serializeUser(): defines what data to save in the session
 // (happens when you log in successfully)
@@ -21,6 +20,7 @@ passport.deserializeUser((userId, done) => {
   console.log("DESERIALIZE (retrieving user info from the DB) 🐓");
 
   User.findById(userId)
+    .populate("ActivityChoosen")
     .then(userDoc => {
       // call done() with null and the result if it's successful
       // (the result is the user document from the database)
@@ -30,9 +30,7 @@ passport.deserializeUser((userId, done) => {
     .catch(err => done(err));
 });
 
-
-function passportBasicSetup(theApp){
-
+function passportBasicSetup(theApp) {
   // passport super power is here:
   theApp.use(passport.initialize()); // <== 'fires' the passport package
   theApp.use(passport.session()); // <== connects passport to the session
