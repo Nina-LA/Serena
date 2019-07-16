@@ -116,6 +116,13 @@ a {
   margin-left: 30px;
 }
 
+.LoginPage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
   .header a {

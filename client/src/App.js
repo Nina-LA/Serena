@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "antd/dist/antd.css";
 import "./App.css";
 
-import { Switch, NavLink, Route } from "react-router-dom";
+import { Switch, NavLink, Route, Redirect } from "react-router-dom";
 
 import axios from "axios";
 import Signup from "./components/user-pages/Signup";
@@ -38,6 +38,15 @@ class App extends Component {
       });
   }
 
+  logout = () => {
+    axios
+      .get("http://localhost:3001/api/logout", {})
+      .then(response => this.setState({ currentUser: null }))
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   // this is the method for updating "currentUser"
   // (must be defined in App.js since it's the owner of "currentUser" now)
   syncCurrentUser(user) {
@@ -46,6 +55,8 @@ class App extends Component {
 
   render() {
     let app, nav;
+    console.log("hell");
+    console.log("hell", this.state.currentUser);
 
     if (this.state.currentUser == null) {
       nav = (
@@ -110,7 +121,7 @@ class App extends Component {
               )}
             />
 
-            <Route
+            {/* <Route
               path="/logout-page"
               render={() => (
                 <Login
@@ -118,7 +129,7 @@ class App extends Component {
                   onUserChange={userDoc => this.syncCurrentUser(userDoc)}
                 />
               )}
-            />
+            /> */}
           </Switch>
         </div>
       );
@@ -135,7 +146,7 @@ class App extends Component {
           <NavLink to="/MieuxEtre"> Le Mieux Etre </NavLink>
           <NavLink to="/Activities"> Ajouter des Activités </NavLink>
           <NavLink to="/ListActivities"> Liste des Activités </NavLink>
-          <NavLink to="/login-page"> Logout </NavLink>
+          <NavLink onClick={() => this.logout()}> Logout </NavLink>
         </nav>
       );
       app = (
@@ -177,7 +188,7 @@ class App extends Component {
             />
             {/* <Route exact path="/ListActivities" component={ListActivities} /> */}
 
-            <Route
+            {/* <Route
               path="/logout-page"
               render={() => (
                 <Login
@@ -185,6 +196,14 @@ class App extends Component {
                   onUserChange={userDoc => this.syncCurrentUser(userDoc)}
                 />
               )}
+            /> */}
+            <Route
+              path="/signup-page"
+              render={() => <Redirect to="/ComprendreLaDepression" />}
+            />
+            <Route
+              path="/login-page"
+              render={() => <Redirect to="/ComprendreLaDepression" />}
             />
           </Switch>
         </div>

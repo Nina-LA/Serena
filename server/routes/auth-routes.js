@@ -17,12 +17,10 @@ router.post("/signup", (req, res, next) => {
     encryptedPassword.match(/[0-9]/) === null
   ) {
     // send error JSON if any of the fields is empty or password doesn't contain a number
-    res
-      .status(401)
-      .json({
-        message:
-          "All fields need to be filled and password must contain a number."
-      });
+    res.status(401).json({
+      message:
+        "All fields need to be filled and password must contain a number."
+    });
     return;
   }
 
@@ -34,11 +32,9 @@ router.post("/signup", (req, res, next) => {
   User.findOne({ email })
     .then(foundUser => {
       if (foundUser !== null) {
-        res
-          .status(401)
-          .json({
-            message: "A user with the same email is already registered!"
-          });
+        res.status(401).json({
+          message: "A user with the same email is already registered!"
+        });
         return;
       }
 
@@ -129,12 +125,14 @@ router.post("/login", (req, res, next) => {
 
 //////////////// LOGOUT /////////////////////
 
-router.delete("/logout", (req, res, next) => {
+router.get("/logout", (req, res, next) => {
   // "req.logOut()" is a Passport method that removes the user ID from session
-  req.logOut();
+  console.log("entering log out");
+  req.logout();
 
   // send empty "userDoc" when you log out
   res.json({ userDoc: null });
+  res.redirect("/login");
 });
 
 // GET "/checkuser" allows the client to check to see:
