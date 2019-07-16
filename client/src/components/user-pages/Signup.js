@@ -60,7 +60,7 @@ class Signup extends Component {
     }
 
     return (
-      <section>
+      <section className="SignupPage">
         <h2> Sign Up </h2>
 
         {/* <Form onSubmit={ event => this.handleSubmit(event) } > */}
