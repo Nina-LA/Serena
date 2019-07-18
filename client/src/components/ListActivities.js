@@ -38,7 +38,8 @@ class ListActivities extends Component {
       .get(`http://localhost:3001/api/ListActivities`)
       .then(responseFromApi => {
         this.setState({
-          listOfActivities: responseFromApi.data
+          listOfActivities: responseFromApi.data,
+          value: moment()
         });
       });
   };
@@ -64,9 +65,14 @@ class ListActivities extends Component {
   };
 
   chooseActivity = (event, id) => {
-    axios.post("http://localhost:3001/api/addNewActivity/" + id, null, {
-      withCredentials: true
-    });
+    axios
+      .post("http://localhost:3001/api/addNewActivity/" + id, null, {
+        withCredentials: true
+      })
+      .then(resp => {
+        console.log("click");
+        this.getAllActivities();
+      });
   };
 
   componentDidMount() {

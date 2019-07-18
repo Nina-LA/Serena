@@ -185,9 +185,11 @@ class ComprendreLaDepression extends Component {
         </Paragraph>
         <Paragraph>
           {" "}
-          Serena est un chaperon virtuel et mobile qui vous aide à mieux vivre
-          avec la dépression. Elle ne remplace pas un traitement thérapeutique
-          mais est plutôt à des fins de support.{" "}
+          <Text strong>
+            Serena est un chaperon virtuel et mobile qui vous aide à mieux vivre
+            avec la dépression. Elle ne remplace pas un traitement thérapeutique
+            mais est plutôt à des fins de support.
+          </Text>{" "}
         </Paragraph>
       </Typography>
     );

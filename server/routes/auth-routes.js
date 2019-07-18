@@ -10,6 +10,7 @@ const bcryptSalt = 10;
 
 router.post("/signup", (req, res, next) => {
   const { username, email, encryptedPassword } = req.body;
+  const role = "enduser";
 
   if (
     username == "" ||
@@ -43,7 +44,7 @@ router.post("/signup", (req, res, next) => {
       const salt = bcrypt.genSaltSync(bcryptSalt);
       const hashpass = bcrypt.hashSync(encryptedPassword, salt);
 
-      User.create({ username, email, encryptedPassword: hashpass })
+      User.create({ username, email, role, encryptedPassword: hashpass })
         .then(userDoc => {
           console.log("40 line");
           // if all good, log in the user automatically
@@ -132,7 +133,7 @@ router.get("/logout", (req, res, next) => {
 
   // send empty "userDoc" when you log out
   res.json({ userDoc: null });
-  res.redirect("/login");
+  res.redirect("/");
 });
 
 // GET "/checkuser" allows the client to check to see:

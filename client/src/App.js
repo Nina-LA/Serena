@@ -41,7 +41,10 @@ class App extends Component {
   logout = () => {
     axios
       .get("http://localhost:3001/api/logout", {})
-      .then(response => this.setState({ currentUser: null }))
+      .then(() => {
+        this.setState({ currentUser: null });
+        return <Redirect to="/" />;
+      })
       .catch(err => {
         console.log(err);
       });
@@ -58,7 +61,161 @@ class App extends Component {
     console.log("hell");
     console.log("hell", this.state.currentUser);
 
-    if (this.state.currentUser == null) {
+    if (
+      this.state.currentUser != null &&
+      this.state.currentUser.role === "admin"
+    ) {
+      nav = (
+        <nav className="header-right">
+          <NavLink exact to="/">
+            {" "}
+            Home{" "}
+          </NavLink>
+          <NavLink to="/ComprendreLaDepression">
+            Comprendre La Dépression
+          </NavLink>
+          <NavLink to="/MieuxEtre"> Le Mieux Etre </NavLink>
+          <NavLink to="/Activities"> Ajouter des Activités </NavLink>
+          <NavLink onClick={() => this.logout()}> Logout </NavLink>
+        </nav>
+      );
+      app = (
+        <div>
+          <Switch>
+            {/* this is example how to normally do the Route: */}
+            {/* <Route path="/somePage" component={ someComponentThatWillRenderWhenUSerClickThisLink }   /> */}
+            <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path="/ComprendreLaDepression"
+              component={ComprendreLaDepression}
+            />
+            <Route
+              exact
+              path="/VideosInspirantes"
+              component={VideosInspirantes}
+            />
+            <Route
+              exact
+              path="/RetrouverSaConfianceEnSoi"
+              component={RetrouverSaConfianceEnSoi}
+            />
+            <Route exact path="/RoutineMatinale" component={RoutineMatinale} />
+            <Route exact path="/Meditation" component={Meditation} />
+            <Route exact path="/MieuxEtre" component={MieuxEtre} />
+            <Route
+              exact
+              path="/MaitriserSonSommeil"
+              component={MaitriserSonSommeil}
+            />
+            <Route exact path="/Activities" component={Activities} />
+            {/* <Route
+              exact
+              path="/ListActivities"
+              render={props => (
+                <ListActivities user={this.state.currentUser} {...props} />
+              )}
+            /> */}
+            {/* <Route exact path="/ListActivities" component={ListActivities} /> */}
+
+            {/* <Route
+              path="/logout-page"
+              render={() => (
+                <Login
+                  currentUser={this.state.currentUser}
+                  onUserChange={userDoc => this.syncCurrentUser(userDoc)}
+                />
+              )}
+            /> */}
+            <Route
+              path="/signup-page"
+              render={() => <Redirect to="/ComprendreLaDepression" />}
+            />
+            <Route
+              path="/login-page"
+              render={() => <Redirect to="/ComprendreLaDepression" />}
+            />
+          </Switch>
+        </div>
+      );
+    } else if (
+      this.state.currentUser != null &&
+      this.state.currentUser.role === "enduser"
+    ) {
+      nav = (
+        <nav className="header-right">
+          <NavLink exact to="/">
+            {" "}
+            Home{" "}
+          </NavLink>
+          <NavLink to="/ComprendreLaDepression">
+            Comprendre La Dépression
+          </NavLink>
+          <NavLink to="/MieuxEtre"> Le Mieux Etre </NavLink>
+          <NavLink to="/ListActivities"> Liste des Activités </NavLink>
+          <NavLink onClick={() => this.logout()}> Logout </NavLink>
+        </nav>
+      );
+      app = (
+        <div>
+          <Switch>
+            {/* this is example how to normally do the Route: */}
+            {/* <Route path="/somePage" component={ someComponentThatWillRenderWhenUSerClickThisLink }   /> */}
+            <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path="/ComprendreLaDepression"
+              component={ComprendreLaDepression}
+            />
+            <Route
+              exact
+              path="/VideosInspirantes"
+              component={VideosInspirantes}
+            />
+            <Route
+              exact
+              path="/RetrouverSaConfianceEnSoi"
+              component={RetrouverSaConfianceEnSoi}
+            />
+            <Route exact path="/RoutineMatinale" component={RoutineMatinale} />
+            <Route exact path="/Meditation" component={Meditation} />
+            <Route exact path="/MieuxEtre" component={MieuxEtre} />
+            <Route
+              exact
+              path="/MaitriserSonSommeil"
+              component={MaitriserSonSommeil}
+            />
+            <Route exact path="/Activities" component={Activities} />
+            <Route
+              exact
+              path="/ListActivities"
+              render={props => (
+                <ListActivities user={this.state.currentUser} {...props} />
+              )}
+            />
+            {/* <Route exact path="/ListActivities" component={ListActivities} /> */}
+
+            {/* <Route
+              path="/logout-page"
+              render={() => (
+                <Login
+                  currentUser={this.state.currentUser}
+                  onUserChange={userDoc => this.syncCurrentUser(userDoc)}
+                />
+              )}
+            /> */}
+            <Route
+              path="/signup-page"
+              render={() => <Redirect to="/ComprendreLaDepression" />}
+            />
+            <Route
+              path="/login-page"
+              render={() => <Redirect to="/ComprendreLaDepression" />}
+            />
+          </Switch>
+        </div>
+      );
+    } else {
       nav = (
         <nav className="header-right">
           <NavLink exact to="/">
@@ -130,81 +287,6 @@ class App extends Component {
                 />
               )}
             /> */}
-          </Switch>
-        </div>
-      );
-    } else {
-      nav = (
-        <nav className="header-right">
-          <NavLink exact to="/">
-            {" "}
-            Home{" "}
-          </NavLink>
-          <NavLink to="/ComprendreLaDepression">
-            Comprendre La Dépression
-          </NavLink>
-          <NavLink to="/MieuxEtre"> Le Mieux Etre </NavLink>
-          <NavLink to="/Activities"> Ajouter des Activités </NavLink>
-          <NavLink to="/ListActivities"> Liste des Activités </NavLink>
-          <NavLink onClick={() => this.logout()}> Logout </NavLink>
-        </nav>
-      );
-      app = (
-        <div>
-          <Switch>
-            {/* this is example how to normally do the Route: */}
-            {/* <Route path="/somePage" component={ someComponentThatWillRenderWhenUSerClickThisLink }   /> */}
-            <Route exact path="/" component={Home} />
-            <Route
-              exact
-              path="/ComprendreLaDepression"
-              component={ComprendreLaDepression}
-            />
-            <Route
-              exact
-              path="/VideosInspirantes"
-              component={VideosInspirantes}
-            />
-            <Route
-              exact
-              path="/RetrouverSaConfianceEnSoi"
-              component={RetrouverSaConfianceEnSoi}
-            />
-            <Route exact path="/RoutineMatinale" component={RoutineMatinale} />
-            <Route exact path="/Meditation" component={Meditation} />
-            <Route exact path="/MieuxEtre" component={MieuxEtre} />
-            <Route
-              exact
-              path="/MaitriserSonSommeil"
-              component={MaitriserSonSommeil}
-            />
-            <Route exact path="/Activities" component={Activities} />
-            <Route
-              exact
-              path="/ListActivities"
-              render={props => (
-                <ListActivities user={this.state.currentUser} {...props} />
-              )}
-            />
-            {/* <Route exact path="/ListActivities" component={ListActivities} /> */}
-
-            {/* <Route
-              path="/logout-page"
-              render={() => (
-                <Login
-                  currentUser={this.state.currentUser}
-                  onUserChange={userDoc => this.syncCurrentUser(userDoc)}
-                />
-              )}
-            /> */}
-            <Route
-              path="/signup-page"
-              render={() => <Redirect to="/ComprendreLaDepression" />}
-            />
-            <Route
-              path="/login-page"
-              render={() => <Redirect to="/ComprendreLaDepression" />}
-            />
           </Switch>
         </div>
       );
